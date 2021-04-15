@@ -1,0 +1,6 @@
+.card-zoom:hover .card-zoom-image {
+  @apply scale-150 opacity-40;
+}
+.card-zoom:hover .card-zoom-text {
+  @apply translate-y-0;
+}
