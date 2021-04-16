@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Filter from "./filter";
 import Media from "./media";
 
-const options = [
+const optInit = [
   {
     title: "Platform",
-    value: ["All", "Facebook", "Instagram", "YouTube"],
+    value: "",
+    values: ["All", "Facebook", "Instagram", "YouTube"],
+    disabled: false,
   },
   {
     title: "Age",
-    value: [
+    value: "",
+    values: [
       "All",
       "18 to 24",
       "25 to 34",
@@ -18,18 +21,24 @@ const options = [
       "55 to 64",
       "+65",
     ],
+    disabled: false,
   },
   {
     title: "Gender",
-    value: ["Both", "Male", "Female"],
+    value: "",
+    values: ["Both", "Male", "Female"],
+    disabled: false,
   },
   {
     title: "Media Type",
-    value: ["All", "Text", "Image", "Video", "Share"],
+    value: "",
+    values: ["All", "Text", "Image", "Video", "Share"],
+    disabled: false,
   },
   {
     title: "Date Range Filter",
-    value: [
+    value: "",
+    values: [
       "Today",
       "Yesterday",
       "This Week",
@@ -38,18 +47,114 @@ const options = [
       "Last Month",
       "Custom Dates",
     ],
+    disabled: false,
   },
   {
     title: "Sort by",
-    value: ["Spend", "Revenue", "ROAS", "VTR", "CPV/CPC"],
+    value: "",
+    values: ["Spend", "Revenue", "ROAS", "VTR", "CPV/CPC"],
+    disabled: false,
   },
 ];
 
-const onSelect = (value) => {
-  console.log(value);
-};
+const dataInit = [
+  {
+    media_url: "https://www.youtube.com/embed/tgbNymZ7vqY",
+    media_type: "video",
+    spend: 123.1,
+    revenue: 200,
+    impressions: 2020,
+    platform: "youtube",
+    age_min: null,
+    age_max: null,
+    gender: null,
+    cpm: 13.2,
+    roas: 828,
+    vtr: 88,
+    cpv: 2,
+  },
+  {
+    media_url:
+      "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2020%2F03%2Fjoey.jpg",
+    media_type: "image",
+    spend: 123.1,
+    revenue: 200,
+    impressions: 2020,
+    platform: "facebook",
+    age_min: null,
+    age_max: null,
+    gender: null,
+    cpm: 13.2,
+    roas: 828,
+    vtr: 88,
+    cpv: 2,
+  },
+  {
+    media_url:
+      "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2020%2F03%2Fjoey.jpg",
+    media_type: "image",
+    spend: 123.1,
+    revenue: 200,
+    impressions: 2020,
+    platform: "facebook",
+    age_min: null,
+    age_max: null,
+    gender: null,
+    cpm: 13.2,
+    roas: 828,
+    vtr: 88,
+    cpv: 2,
+  },
+];
 
 const Page = () => {
+  const [options, setOptions] = useState(optInit);
+  const [data, setData] = useState([]);
+
+  const onSelect = (value) => {
+    if (value === "YouTube") {
+      setOptions((options) => {
+        return options.map((option) => {
+          if (option.title === "Platform") {
+            option.value = value;
+          } else if (option.title === "Gender") {
+            option.disabled = true;
+            option.value = "Any";
+          } else if (option.title === "Media Type") {
+            option.disabled = true;
+            option.value = "Video";
+          }
+          return option;
+        });
+      });
+    } else {
+      setOptions((options) => {
+        return options.map((option) => {
+          option.values.map((item) => {
+            if (item === value) option.value = value;
+          });
+
+          if (options[0].values.findIndex((item) => item === value) > -1) {
+            if (option.title === "Gender") {
+              option.disabled = false;
+              option.value = "";
+            } else if (option.title === "Media Type") {
+              option.disabled = false;
+              option.value = "";
+            }
+          }
+          return option;
+        });
+      });
+    }
+  };
+
+  useEffect(() => {
+    setData(dataInit);
+  }, []);
+
+  useEffect(() => {}, [options]);
+
   return (
     <div className="m-6 sm:m-12 flex flex-col">
       <div className="flex lg:flex-row md: flex-col">
@@ -79,13 +184,10 @@ const Page = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-wrap mt-4 sm:mt-12">
-        <Media />
-        <Media />
-        <Media />
-        <Media />
-        <Media />
-        <Media />
+      <div className="grid grid-flow-row grid-cols-1 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 mt-4 sm:mt-12 gap-4 sm:gap-4 lg:gap-8">
+        {data.map((datum, index) => (
+          <Media key={index} data={datum} />
+        ))}
       </div>
     </div>
   );

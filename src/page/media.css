@@ -1,6 +1,11 @@
 .card-zoom:hover .card-zoom-image {
-  @apply scale-150 opacity-40;
+  @apply scale-125 opacity-40;
 }
+
+.card-zoom:hover .card-zoom-iframe {
+  @apply opacity-40;
+}
+
 .card-zoom:hover .card-zoom-text {
   @apply translate-y-0;
 }
