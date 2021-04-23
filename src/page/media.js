@@ -111,7 +111,7 @@ const Media = ({ data }) => {
             </video>
           )}
         </FrontSide>
-        <BackSide className="back-card grid grid-flow-row grid-cols-2 gap-1 sm:gap-0 md:gap-2 lg:gap-4 2xl:gap-8 text-5xl font-black rounded-md bg-green-200">
+        <BackSide className="back-card grid grid-flow-row grid-cols-2 gap-1 sm:gap-0 md:gap-2 lg:gap-4 2xl:gap-8 text-5xl font-black rounded-md bg-green-200 cursor-default">
           {hover.map((item, index) => (
             <div key={index}>
               <p className="font-bold text-blue-400 uppercase text-sm sm:text-base md:text-lg lg:text-lg">
