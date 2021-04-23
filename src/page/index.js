@@ -110,6 +110,9 @@ const Page = () => {
           } else if (option.title === "Media Type") {
             option.disabled = true;
             option.value = "Video";
+          } else if (option.title === "Age") {
+            option.disabled = true;
+            option.value = "All";
           }
           return option;
         });
@@ -126,6 +129,9 @@ const Page = () => {
               option.disabled = false;
               option.value = "";
             } else if (option.title === "Media Type") {
+              option.disabled = false;
+              option.value = "";
+            } else if (option.title === "Age") {
               option.disabled = false;
               option.value = "";
             }
