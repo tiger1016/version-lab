@@ -1,7 +1,8 @@
+import React from "react";
 import Page from "./page";
 
-function App() {
+const App = () => {
   return <Page />;
-}
+};
 
 export default App;

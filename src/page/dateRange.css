@@ -1,0 +1,11 @@
+.DateInput_input {
+  @apply m-0 p-1 px-3 font-normal text-base border-b-0 placeholder-black text-black;
+}
+
+.DateInput_1 #endDate {
+  /* direction: rtl; */
+}
+
+.DateRangePickerInput {
+  @apply rounded border-gray-500 border-2;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Filter from "./filter";
 import Media from "./media";
+import DateRange from "./dateRange";
 
 const optInit = [
   {
@@ -33,20 +34,6 @@ const optInit = [
     title: "Media Type",
     value: "",
     values: ["All", "Text", "Image", "Video", "Share"],
-    disabled: false,
-  },
-  {
-    title: "Date Range Filter",
-    value: "",
-    values: [
-      "Today",
-      "Yesterday",
-      "This Week",
-      "Last Week",
-      "This Month",
-      "Last Month",
-      "Custom Dates",
-    ],
     disabled: false,
   },
   {
@@ -174,6 +161,7 @@ const Page = () => {
           </div>
         </div>
         <div className="lg:w-4/12 ml-0 lg:ml-12 grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          <DateRange />
           {options.slice(4).map((option, index) => (
             <Filter
               options={option}
