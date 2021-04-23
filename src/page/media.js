@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./media.css";
+import Flippy, { FrontSide, BackSide } from "react-flippy";
 
 const hoverInit = [
   {
@@ -50,6 +51,7 @@ const textInit = [
 const Media = ({ data }) => {
   const [hover, setHover] = useState(hoverInit);
   const [text, setText] = useState(textInit);
+  const flippy = useRef(null);
 
   useEffect(() => {
     setText(
@@ -80,25 +82,36 @@ const Media = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="flex flex-col mb-12 justify-center">
-      <div className="card-zoom relative flex items-center justify-center overflow-hidden cursor-default flex-1">
-        <div className="w-full h-full rounded-md overflow-hidden shadow-lg">
+    <div className="card-container flex flex-col mb-12 justify-center">
+      <Flippy
+        flipOnHover={true}
+        flipOnClick={false}
+        flipDirection="horizontal"
+        ref={(r) => (flippy.current = r)}
+        className="flex items-center justify-center cursor-default flex-1"
+      >
+        <FrontSide className="card w-full h-full rounded-md shadow-lg">
           {data.media_type === "image" ? (
             <img
               src={data.media_url}
-              className="card-zoom-image w-full h-auto md:h-full transition-all duration-500 ease-in-out transform bg-center bg-cover"
+              className="w-full h-auto md:h-full rounded-md"
             />
           ) : data.platform === "youtube" ? (
-            <div className="card-zoom-iframe w-full h-full">
-              <iframe width="100%" height="100%" src={data.media_url}></iframe>
+            <div className="w-full h-full">
+              <iframe
+                width="100%"
+                height="100%"
+                src={data.media_url}
+                className="rounded-md"
+              ></iframe>
             </div>
           ) : (
             <video width="100%" height="100%" controls>
               <source src={data.media_url} type="video/mp4" />
             </video>
           )}
-        </div>
-        <div className="card-zoom-text grid grid-flow-row grid-cols-2 gap-1 sm:gap-0 md:gap-2 lg:gap-4 2xl:gap-8 absolute text-5xl font-black transition-all duration-500 ease-in-out transform translate-y-96">
+        </FrontSide>
+        <BackSide className="back-card grid grid-flow-row grid-cols-2 gap-1 sm:gap-0 md:gap-2 lg:gap-4 2xl:gap-8 text-5xl font-black rounded-md bg-green-200">
           {hover.map((item, index) => (
             <div key={index}>
               <p className="font-bold text-blue-400 uppercase text-sm sm:text-base md:text-lg lg:text-lg">
@@ -109,8 +122,8 @@ const Media = ({ data }) => {
               </p>
             </div>
           ))}
-        </div>
-      </div>
+        </BackSide>
+      </Flippy>
       <div className="grid grid-flow-row grid-cols-3 p-1 pt-4 sm:pt-8 gap-2">
         {text.map((item, index) => (
           <div key={index} className="flex flex-col">

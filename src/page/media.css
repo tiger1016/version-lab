@@ -9,3 +9,15 @@
 .card-zoom:hover .card-zoom-text {
   @apply translate-y-0;
 }
+
+.card-container > :first-child {
+  flex: 1 !important;
+}
+
+.card {
+  padding: 0px !important;
+}
+
+.back-card {
+  background-color: aquamarine !important;
+}
